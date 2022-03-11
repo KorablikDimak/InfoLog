@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<logger>
+    <targets>
+        <!--
+        Example of logger configuration. 'logsender' and 'layout' are required attributes for base senders.
+        'connectionstring' and 'tablename' are required attributes for DatabaseSender. 'filepath' is required attribute for FileSender.
+        Attributes: 'minlevel' is optional for base senders.
+        Parameters provided by base senders:
+        {method}, {line}, {longdate}, {shortdate}, {longtime}, {shorttime}, {level}, {message}, {millisecond}, {class}, {basedir}
+        -->
+        <!--
+        DatabaseSender:
+        '|' character is a separator into columns. The first column parameter in {} will be used for the name of the database column.
+        'layout' can't be changed after the table is created. Attempting to change may result in an exception.
+        -->
+        <target logsender="Database" minlevel="Error" connectionstring="Data Source={server};Initial Catalog={database};Persist Security Info=True;User ID={username};Password={password}"
+                layout="{shortdate}|{longtime}:{millisecond}|{level}|{class} {method}()|line: {line}|{message}"
+                tablename="logs"/>
+        <!--
+        FileSender:
+        Saves the string in its original form, replacing {param name} with param value.
+        You can use the same parameters in the 'filepath' as in 'layout'.
+        -->
+        <target logsender="File" minlevel="Warning" filepath="{basedir}\logs\{shortdate}.log"
+                layout="{longtdate} | {shorttime}:{millisecond} | {level} | {method}() | line: {line} | {message}"/>
+        <!--
+        '|' character is a separator for console writer and is not used in the output.
+        In separate sections you can specify the colors of the console:
+        {foregroundcolor='color name'} or {backgroundcolor='color name'}.
+        -->
+        <target logsender="Console" minlevel="Debug"
+                layout="{shortdate}{foregroundcolor=green} | {longtime}:{millisecond}{foregroundcolor=green} | {level}{foregroundcolor=blue}{backgroundcolor=red} | {class}{foregroundcolor=blue} | line: {line}{foregroundcolor=yellow} | {message}{foregroundcolor=white}"/>
+    </targets>
+</logger>

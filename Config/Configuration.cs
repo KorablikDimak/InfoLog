@@ -7,6 +7,10 @@ namespace InfoLog.Config
     {
         public List<Dictionary<string, string>> Configs { get; }
 
+        /// <summary>
+        /// Create dictionary {attribute:param} from xml file.
+        /// </summary>
+        /// <param name="xmlConfigPath">Absolute or relative path to .xml file</param>
         public Configuration(string xmlConfigPath)
         {
             var xmlDocument = XDocument.Load(xmlConfigPath);
