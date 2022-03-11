@@ -7,6 +7,8 @@
         Attributes: 'minlevel' is optional for base senders.
         Parameters provided by base senders:
         {method}, {line}, {longdate}, {shortdate}, {longtime}, {shorttime}, {level}, {message}, {millisecond}, {class}, {basedir}
+        Custom senders can be added to construction <target 'attributes'/>. they are called in the same order as the file.
+        For the base logger, only the attribute 'logsender' is required.
         -->
         <!--
         DatabaseSender:
