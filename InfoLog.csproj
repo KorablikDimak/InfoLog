@@ -2,6 +2,17 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
+        <Authors>KorablikDimak</Authors>
+        <Description>A package for creating a log with the ability to supplement various logging options and use the built-in logging to the console, file, database.</Description>
+        <Copyright>korablikdimak@gmail.com</Copyright>
+        <PackageLicenseExpression></PackageLicenseExpression>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>log</PackageTags>
+        <RepositoryUrl>https://github.com/KorablikDimak/InfoLog</RepositoryUrl>
+        <NeutralLanguage>en</NeutralLanguage>
+        <PackageProjectUrl>https://github.com/KorablikDimak/InfoLog</PackageProjectUrl>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     </PropertyGroup>
 
     <ItemGroup>
