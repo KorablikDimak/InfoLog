@@ -29,3 +29,5 @@ public interface ISender
 ```
 `SendLog` the main method for sending messages supporting asynchrony. It is the implementation of this method that will allow you to create your own ways of logging logs.
 A more detailed description of the methods can be found in the **documentation**.
+
+### `InfoLog` can be downloaded by NuGet.
