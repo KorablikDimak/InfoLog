@@ -19,4 +19,11 @@
       <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="LogConfig.xml" />
+      <Content Include="LogConfig.xml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

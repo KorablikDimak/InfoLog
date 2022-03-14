@@ -54,6 +54,11 @@ namespace InfoLog.Extensions
                     layoutPart.IndexOf("{") + 1, 
                     layoutPart.IndexOf("}") - layoutPart.IndexOf("{") - 1);
 
+                if (sourceString == "")
+                {
+                    sourceString = layoutPart;
+                }
+
                 sqlCommand = sourceString switch
                 {
                     "message" => sqlCommand + " " + sourceString + " " + "NVARCHAR(1000) NOT NULL" + ",\n",
