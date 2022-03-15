@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using InfoLog.Config;
 using InfoLog.Senders;
 
 namespace InfoLog
@@ -11,9 +12,51 @@ namespace InfoLog
     {
         private List<ISender> Senders { get; }
 
+        /// <summary>
+        /// Crate empty Logger without senders. Add them separately or better use a LoggerFactory.
+        /// </summary>
         public Logger()
         {
             Senders = new List<ISender>();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="configuration">The configuration is set when the factory is created and cannot be changed</param>
+        public Logger(List<Dictionary<string, string>> configuration)
+        {
+            Senders = new List<ISender>();
+            foreach (var config in configuration)
+            {
+                AddSender(config);
+            }
+        }
+
+        /// <summary>
+        /// Creates a logger based on a .xml config file.
+        /// </summary>
+        /// <param name="xmlPath">Absolute or relative path to .xml file</param>
+        public Logger(string xmlPath)
+        {
+            Senders = new List<ISender>();
+            foreach (var config in new Configuration(xmlPath).Configs)
+            {
+                AddSender(config);
+            }
+        }
+
+        /// <summary>
+        /// Creates a logger based on a .xml config file.
+        /// </summary>
+        /// <param name="configuration">Get from Configuration constructor</param>
+        public Logger(Configuration configuration)
+        {
+            Senders = new List<ISender>();
+            foreach (var config in configuration.Configs)
+            {
+                AddSender(config);
+            }
         }
 
         public async Task Trace(string message, 

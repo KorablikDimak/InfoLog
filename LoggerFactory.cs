@@ -12,6 +12,16 @@ namespace InfoLog
         /// The constructor which sets the configuration (from xml).
         /// The generic parameter is the type that implements the interface ILogger.
         /// </summary>
+        /// <param name="xmlPath">Absolute or relative path to .xml file</param>
+        public LoggerFactory(string xmlPath)
+        {
+            Configs = new Configuration(xmlPath).Configs;
+        }
+
+        /// <summary>
+        /// The constructor which sets the configuration (from xml).
+        /// The generic parameter is the type that implements the interface ILogger.
+        /// </summary>
         /// <param name="configuration">The configuration is set when the factory is created and cannot be changed</param>
         public LoggerFactory(Configuration configuration)
         {
