@@ -1,6 +1,6 @@
 ![System.Data.SqlClient](https://img.shields.io/badge/System.Data.SqlClient-4.8.3-informational)
 # InfoLog
-### Descriotion
+### Description
 A library for custom creation of logs that supports many built-in tools for obtaining detailed information in the log log and their subsequent output to the console/file/database. Supports creating your own logging methods by implementing interfaces `ILogger` and `ISender`.
 ### Logger configuration
 [Example and xml documentation](https://github.com/KorablikDimak/InfoLog/blob/master/LogConfig.xml) 
