@@ -6,194 +6,193 @@ using System.Threading.Tasks;
 using InfoLog.Config;
 using InfoLog.Senders;
 
-namespace InfoLog
+namespace InfoLog;
+
+public class Logger : ILogger
 {
-    public class Logger : ILogger
+    private List<ISender> Senders { get; }
+
+    /// <summary>
+    /// Crate empty Logger without senders. Add them separately or better use a LoggerFactory.
+    /// </summary>
+    public Logger()
     {
-        private List<ISender> Senders { get; }
+        Senders = new List<ISender>();
+    }
 
-        /// <summary>
-        /// Crate empty Logger without senders. Add them separately or better use a LoggerFactory.
-        /// </summary>
-        public Logger()
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="configuration">The configuration is set when the factory is created and cannot be changed</param>
+    public Logger(List<Dictionary<string, string>> configuration)
+    {
+        Senders = new List<ISender>();
+        foreach (var config in configuration)
         {
-            Senders = new List<ISender>();
+            AddSender(config);
         }
+    }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="configuration">The configuration is set when the factory is created and cannot be changed</param>
-        public Logger(List<Dictionary<string, string>> configuration)
+    /// <summary>
+    /// Creates a logger based on a .xml config file.
+    /// </summary>
+    /// <param name="xmlPath">Absolute or relative path to .xml file</param>
+    public Logger(string xmlPath)
+    {
+        Senders = new List<ISender>();
+        foreach (var config in new Configuration(xmlPath).Configs)
         {
-            Senders = new List<ISender>();
-            foreach (var config in configuration)
-            {
-                AddSender(config);
-            }
+            AddSender(config);
         }
+    }
 
-        /// <summary>
-        /// Creates a logger based on a .xml config file.
-        /// </summary>
-        /// <param name="xmlPath">Absolute or relative path to .xml file</param>
-        public Logger(string xmlPath)
+    /// <summary>
+    /// Creates a logger based on a .xml config file.
+    /// </summary>
+    /// <param name="configuration">Get from Configuration constructor</param>
+    public Logger(Configuration configuration)
+    {
+        Senders = new List<ISender>();
+        foreach (var config in configuration.Configs)
         {
-            Senders = new List<ISender>();
-            foreach (var config in new Configuration(xmlPath).Configs)
-            {
-                AddSender(config);
-            }
+            AddSender(config);
         }
+    }
 
-        /// <summary>
-        /// Creates a logger based on a .xml config file.
-        /// </summary>
-        /// <param name="configuration">Get from Configuration constructor</param>
-        public Logger(Configuration configuration)
+    public async Task Trace(string message, 
+        [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
+    {
+        await Log(new []
         {
-            Senders = new List<ISender>();
-            foreach (var config in configuration.Configs)
-            {
-                AddSender(config);
-            }
-        }
-
-        public async Task Trace(string message, 
-            [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-            [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
-        {
-            await Log(new []
-            {
-                message,
-                memberName,
-                sourceLineNumber.ToString()
-            }, ILogger.LogLevel.TRACE);
-        }
+            message,
+            memberName,
+            sourceLineNumber.ToString()
+        }, ILogger.LogLevel.TRACE);
+    }
         
-        public async Task Debug(string message,
-            [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-            [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
+    public async Task Debug(string message,
+        [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
+    {
+        await Log(new []
         {
-            await Log(new []
-            {
-                message,
-                memberName,
-                sourceLineNumber.ToString()
-            }, ILogger.LogLevel.DEBUG);
-        }
+            message,
+            memberName,
+            sourceLineNumber.ToString()
+        }, ILogger.LogLevel.DEBUG);
+    }
         
-        public async Task Info(string message,
-            [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-            [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
+    public async Task Info(string message,
+        [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
+    {
+        await Log(new []
         {
-            await Log(new []
-            {
-                message,
-                memberName,
-                sourceLineNumber.ToString()
-            }, ILogger.LogLevel.INFO);
-        }
+            message,
+            memberName,
+            sourceLineNumber.ToString()
+        }, ILogger.LogLevel.INFO);
+    }
         
-        public async Task Warning(string message,
-            [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-            [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
+    public async Task Warning(string message,
+        [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
+    {
+        await Log(new []
         {
-            await Log(new []
-            {
-                message,
-                memberName,
-                sourceLineNumber.ToString()
-            }, ILogger.LogLevel.WARNING);
-        }
+            message,
+            memberName,
+            sourceLineNumber.ToString()
+        }, ILogger.LogLevel.WARNING);
+    }
         
-        public async Task Error(string message, 
-            [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-            [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
+    public async Task Error(string message, 
+        [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
+    {
+        await Log(new []
         {
-            await Log(new []
-            {
-                message,
-                memberName,
-                sourceLineNumber.ToString()
-            }, ILogger.LogLevel.ERROR);
-        }
+            message,
+            memberName,
+            sourceLineNumber.ToString()
+        }, ILogger.LogLevel.ERROR);
+    }
         
-        public async Task Critical(string message,
-            [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-            [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
+    public async Task Critical(string message,
+        [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
+    {
+        await Log(new []
         {
-            await Log(new []
-            {
-                message,
-                memberName,
-                sourceLineNumber.ToString()
-            }, ILogger.LogLevel.CRITICAL);
+            message,
+            memberName,
+            sourceLineNumber.ToString()
+        }, ILogger.LogLevel.CRITICAL);
+    }
+
+    private async Task Log(string[] message, ILogger.LogLevel logLevel)
+    {
+        if (Senders == null) return;
+        foreach (ISender sender in Senders)
+        {
+            await sender.SendLog(message, logLevel);
+        }
+    }
+        
+    public void AddSender(Dictionary<string, string> config)
+    {
+        string senderName = config["logsender"];
+        if (!senderName.Contains("Sender"))
+        {
+            senderName += "Sender";
         }
 
-        private async Task Log(string[] message, ILogger.LogLevel logLevel)
+        ISender sender = null;
+        Type senderType = Type.GetType("InfoLog.Senders." + senderName, false, false);
+        if (senderType != null)
         {
-            if (Senders == null) return;
-            foreach (ISender sender in Senders)
-            {
-                await sender.SendLog(message, logLevel);
-            }
+            sender = senderType.GetConstructor(Array.Empty<Type>())?
+                .Invoke(Array.Empty<object>()) as ISender;
         }
-        
-        public void AddSender(Dictionary<string, string> config)
-        {
-            string senderName = config["logsender"];
-            if (!senderName.Contains("Sender"))
-            {
-                senderName += "Sender";
-            }
 
-            ISender sender = null;
-            Type senderType = Type.GetType("InfoLog.Senders." + senderName, false, false);
-            if (senderType != null)
+        if (sender == null)
+        {
+            var types = Assembly.GetEntryAssembly()?.GetTypes();
+            foreach (var type in types)
             {
-                sender = senderType.GetConstructor(Array.Empty<Type>())?
+                if (!type.FullName.Contains(senderName)) continue;
+                sender = type.GetConstructor(Array.Empty<Type>())?
                     .Invoke(Array.Empty<object>()) as ISender;
-            }
-
-            if (sender == null)
-            {
-                var types = Assembly.GetEntryAssembly()?.GetTypes();
-                foreach (var type in types)
-                {
-                    if (!type.FullName.Contains(senderName)) continue;
-                    sender = type.GetConstructor(Array.Empty<Type>())?
-                        .Invoke(Array.Empty<object>()) as ISender;
-                    break;
-                }
-            }
-
-            if (sender == null) return;
-            sender.Config = config;
-            Senders.Add(sender);
-        }
-        
-        public void AddSender(ISender sender)
-        {
-            Senders.Add(sender);
-        }
-        
-        public void RemoveSender(ISender sender)
-        {
-            Senders.Remove(sender);
-        }
-        
-        public void RemoveSender(string senderName)
-        {
-            if (!senderName.Contains("Sender"))
-            {
-                senderName += "Sender";
-            }
-            foreach (var sender in Senders.Where(sender => sender.GetType().ToString() == senderName))
-            {
-                Senders.Remove(sender);
                 break;
             }
+        }
+
+        if (sender == null) return;
+        sender.Config = config;
+        Senders.Add(sender);
+    }
+        
+    public void AddSender(ISender sender)
+    {
+        Senders.Add(sender);
+    }
+        
+    public void RemoveSender(ISender sender)
+    {
+        Senders.Remove(sender);
+    }
+        
+    public void RemoveSender(string senderName)
+    {
+        if (!senderName.Contains("Sender"))
+        {
+            senderName += "Sender";
+        }
+        foreach (var sender in Senders.Where(sender => sender.GetType().ToString() == senderName))
+        {
+            Senders.Remove(sender);
+            break;
         }
     }
 }

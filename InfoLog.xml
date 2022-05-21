@@ -10,19 +10,19 @@
             </summary>
             <param name="xmlConfigPath">Absolute or relative path to .xml file</param>
         </member>
-        <member name="M:InfoLog.DatabaseConnection.IDatabaseProvider.IsTableCreated">
+        <member name="M:InfoLog.DatabaseProviders.IDatabaseProvider.IsTableCreated">
             <summary>
             Checks for the existence of a table with the given name
             </summary>
             <returns>true if exist, false if not</returns>
         </member>
-        <member name="M:InfoLog.DatabaseConnection.IDatabaseProvider.CreateTable">
+        <member name="M:InfoLog.DatabaseProviders.IDatabaseProvider.CreateTable">
             <summary>
             Creates a table based on the given structure
             </summary>
             <returns>true if table were created, fasle if not</returns>
         </member>
-        <member name="M:InfoLog.DatabaseConnection.IDatabaseProvider.InsertIntoDatabase(System.String)">
+        <member name="M:InfoLog.DatabaseProviders.IDatabaseProvider.InsertIntoDatabase(System.String)">
             <summary>
             Parses the message string and populates the string in the database with them based on the generated structure
             </summary>

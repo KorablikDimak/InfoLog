@@ -16,6 +16,7 @@
         '|' character is a separator into columns. The first column parameter in {} will be used for the name of the database column.
         'layout' can't be changed after the table is created. Attempting to change may result in an exception. 
         The provider attribute is required. supported providers: 'MsSql', 'PostgreSql' (register does not matter).
+        !! if you use postgresql then 'Database' name must be in low register.
         -->
         <target logsender="Database" provider="provider" minlevel="Error" connectionstring="your connection string"
                 layout="{shortdate}|{longtime}:{millisecond}|{level}|{class} {method}()|line: {line}|{message}"

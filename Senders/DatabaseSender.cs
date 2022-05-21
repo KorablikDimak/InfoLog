@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using InfoLog.DatabaseConnection;
+using InfoLog.DatabaseProviders;
 using InfoLog.Extensions;
 
 namespace InfoLog.Senders;
@@ -18,12 +18,8 @@ public class DatabaseSender : ISender
         string logMessage = LogParser.CreateLogMessage(message, Config["layout"], logLevel);
 
         IDatabaseProvider databaseProvider = GetDatabaseProvider();
-        if (!await databaseProvider.IsTableCreated())
-        {
-            if (!await databaseProvider.CreateTable()) throw new Exception("Table can not be created");
-        }
-        if (!await databaseProvider.InsertIntoDatabase(logMessage))
-            throw new Exception("Can not insert message in table");
+        if (!await databaseProvider.IsTableCreated()) await databaseProvider.CreateTable();
+        await databaseProvider.InsertIntoDatabase(logMessage);
     }
 
     private IDatabaseProvider GetDatabaseProvider()

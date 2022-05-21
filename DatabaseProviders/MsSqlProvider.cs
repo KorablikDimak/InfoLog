@@ -1,68 +1,69 @@
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using Npgsql;
 
-namespace InfoLog.DatabaseConnection;
+namespace InfoLog.DatabaseProviders;
 
-public class PostgreSqlProvider : IDatabaseProvider
+public class MsSqlProvider : IDatabaseProvider
 {
     private Dictionary<string, string> Config { get; }
 
-    public PostgreSqlProvider(Dictionary<string, string> config)
+    public MsSqlProvider(Dictionary<string, string> config)
     {
         Config = config;
     }
-    
+
     public async Task<bool> IsTableCreated()
     {
         if (!Config.ContainsKey("tablename")) return false;
         
-        await using var connection = new NpgsqlConnection(Config["connectionstring"]);
+        await using var connection = new SqlConnection(Config["connectionstring"]);
         try
         {
             await connection.OpenAsync();
             string commandText = "SELECT * FROM INFORMATION_SCHEMA.TABLES";
-            var command = new NpgsqlCommand(commandText, connection);
+            var command = new SqlCommand(commandText, connection);
             var reader = await command.ExecuteReaderAsync();
-            
+
+            int i = 0;
             while (await reader.ReadAsync()) 
             {
                 if (!reader.HasRows)
                 {
                     break;
                 }
-                for (int i = 0; i < reader.FieldCount; i++)
+                if (reader.GetValue(i).ToString() != $"{Config["tablename"]}")
                 {
-                    var f = reader.GetValue(i);
-                    if (reader.GetValue(i).ToString() != $"{Config["tablename"]}") continue;
-                    await reader.CloseAsync();
-                    await connection.CloseAsync();
-                    return false;
+                    i++;
+                    continue;
                 }
+                await reader.CloseAsync();
+                await connection.CloseAsync();
+                return true;
             }
         
             await reader.CloseAsync();
             await connection.CloseAsync();
-            return true;
+            return false;
         }
         catch (Exception e)
         {
             await connection.CloseAsync();
-            return false;
+            throw new Exception(e.Message);
         }
     }
 
     public async Task<bool> CreateTable()
     {
-        await using var connection = new NpgsqlConnection(Config["connectionstring"]);
+        await using var connection = new SqlConnection(Config["connectionstring"]);
 
         try
         {
             await connection.OpenAsync();
             string commandText = TableStructParse();
-            var command = new NpgsqlCommand(commandText, connection);
+            var command = new SqlCommand(commandText, connection);
             await command.ExecuteNonQueryAsync();
             await connection.CloseAsync();
             return true;
@@ -70,13 +71,13 @@ public class PostgreSqlProvider : IDatabaseProvider
         catch (Exception e)
         {
             await connection.CloseAsync();
-            return false;
+            throw new Exception(e.Message);
         }
     }
-    
+
     private string TableStructParse()
     {
-        string sqlCommand = $"CREATE TABLE {Config["tablename"]} ( Id SERIAL,\n";
+        string sqlCommand = $"CREATE TABLE {Config["tablename"]} ( Id int IDENTITY PRIMARY KEY,\n";
                 
         var layoutParts = Config["layout"].Split("|", StringSplitOptions.RemoveEmptyEntries); 
         foreach (var layoutPart in layoutParts)
@@ -91,16 +92,16 @@ public class PostgreSqlProvider : IDatabaseProvider
 
             sqlCommand = sourceString switch
             {
-                "message" => sqlCommand + " " + sourceString + " " + "character varying(1000) NOT NULL" + ",\n",
-                "class" => sqlCommand + " " + sourceString + " " + "character varying(100) NOT NULL" + ",\n",
-                _ => sqlCommand + " " + sourceString + " " + "character varying(50) NOT NULL" + ",\n"
+                "message" => sqlCommand + " " + sourceString + " " + "NVARCHAR(1000) NOT NULL" + ",\n",
+                "class" => sqlCommand + " " + sourceString + " " + "NVARCHAR(100) NOT NULL" + ",\n",
+                _ => sqlCommand + " " + sourceString + " " + "NVARCHAR(50) NOT NULL" + ",\n"
             };
         }
 
         sqlCommand += ")";
         return sqlCommand;
     }
-
+    
     public async Task<bool> InsertIntoDatabase(string message)
     {
         string commandText = $"INSERT INTO {Config["tablename"]} VALUES (";
@@ -110,12 +111,12 @@ public class PostgreSqlProvider : IDatabaseProvider
             .Aggregate(commandText, (current, part) => current + $"'{part}'" + ",\n");
         commandText = commandText[..^2] + ")";
             
-        await using var connection = new NpgsqlConnection(Config["connectionstring"]);
+        await using var connection = new SqlConnection(Config["connectionstring"]);
 
         try
         {
             await connection.OpenAsync();
-            var command = new NpgsqlCommand(commandText, connection);
+            var command = new SqlCommand(commandText, connection);
             await command.ExecuteNonQueryAsync();
             await connection.CloseAsync();
             return true;
@@ -123,7 +124,7 @@ public class PostgreSqlProvider : IDatabaseProvider
         catch (Exception e)
         {
             await connection.CloseAsync();
-            return false;
+            throw new Exception(e.Message);
         }
     }
 }

@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace InfoLog.DatabaseConnection;
+namespace InfoLog.DatabaseProviders;
 
 public interface IDatabaseProvider
 {
