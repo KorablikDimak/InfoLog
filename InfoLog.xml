@@ -1,0 +1,174 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>InfoLog</name>
+    </assembly>
+    <members>
+        <member name="M:InfoLog.Config.Configuration.#ctor(System.String)">
+            <summary>
+            Create dictionary {attribute:param} from xml file.
+            </summary>
+            <param name="xmlConfigPath">Absolute or relative path to .xml file</param>
+        </member>
+        <member name="M:InfoLog.DatabaseConnection.IDatabaseProvider.IsTableCreated">
+            <summary>
+            Checks for the existence of a table with the given name
+            </summary>
+            <returns>true if exist, false if not</returns>
+        </member>
+        <member name="M:InfoLog.DatabaseConnection.IDatabaseProvider.CreateTable">
+            <summary>
+            Creates a table based on the given structure
+            </summary>
+            <returns>true if table were created, fasle if not</returns>
+        </member>
+        <member name="M:InfoLog.DatabaseConnection.IDatabaseProvider.InsertIntoDatabase(System.String)">
+            <summary>
+            Parses the message string and populates the string in the database with them based on the generated structure
+            </summary>
+            <param name="message">row info to parse</param>
+            <returns>true if row were added, false if not</returns>
+        </member>
+        <member name="M:InfoLog.Extensions.LogParser.CreateLogMessage(System.String[],System.String,InfoLog.ILogger.LogLevel)">
+            <summary>
+            Return formatted by layout string.
+            Target class can be found only if this method before await construction.
+            </summary>
+            <param name="message">First : message, Second : calling method, third : calling line</param>
+            <param name="layout"></param>
+            <param name="logLevel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InfoLog.ILogger.Trace(System.String,System.String,System.Int32)">
+            <summary>
+            First param is the log message, other params are system info and do not need to be filled.
+            </summary>
+            <param name="message">log message</param>
+            <param name="memberName">system info</param>
+            <param name="sourceLineNumber">system info</param>
+        </member>
+        <member name="M:InfoLog.ILogger.Debug(System.String,System.String,System.Int32)">
+            <summary>
+            First param is the log message, other params are system info and do not need to be filled.
+            </summary>
+            <param name="message">log message</param>
+            <param name="memberName">system info</param>
+            <param name="sourceLineNumber">system info</param>
+        </member>
+        <member name="M:InfoLog.ILogger.Info(System.String,System.String,System.Int32)">
+            <summary>
+            First param is the log message, other params are system info and do not need to be filled.
+            </summary>
+            <param name="message">log message</param>
+            <param name="memberName">system info</param>
+            <param name="sourceLineNumber">system info</param>
+        </member>
+        <member name="M:InfoLog.ILogger.Warning(System.String,System.String,System.Int32)">
+            <summary>
+            First param is the log message, other params are system info and do not need to be filled.
+            </summary>
+            <param name="message">log message</param>
+            <param name="memberName">system info</param>
+            <param name="sourceLineNumber">system info</param>
+        </member>
+        <member name="M:InfoLog.ILogger.Error(System.String,System.String,System.Int32)">
+            <summary>
+            First param is the log message, other params are system info and do not need to be filled.
+            </summary>
+            <param name="message">log message</param>
+            <param name="memberName">system info</param>
+            <param name="sourceLineNumber">system info</param>
+        </member>
+        <member name="M:InfoLog.ILogger.Critical(System.String,System.String,System.Int32)">
+            <summary>
+            First param is the log message, other params are system info and do not need to be filled.
+            </summary>
+            <param name="message">log message</param>
+            <param name="memberName">system info</param>
+            <param name="sourceLineNumber">system info</param>
+        </member>
+        <member name="M:InfoLog.ILogger.AddSender(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Add sender to logger. Senders are called in the same order they are added.
+            </summary>
+            <param name="config"> Must have a key-value pair "logsender"="{name of your class sender}".
+            For example: "logsender"="File" or "FileSender" and class sender name is "FileSender".
+            </param>
+        </member>
+        <member name="M:InfoLog.ILogger.AddSender(InfoLog.Senders.ISender)">
+            <summary>
+            Creates a sender with the initial configuration.
+            </summary>
+            <param name="sender"></param>
+        </member>
+        <member name="M:InfoLog.ILogger.RemoveSender(InfoLog.Senders.ISender)">
+            <summary>
+            Remove a sender with the initial configuration.
+            </summary>
+            <param name="sender"></param>
+        </member>
+        <member name="M:InfoLog.ILogger.RemoveSender(System.String)">
+            <summary>
+            Remove a sender.
+            </summary>
+            <param name="senderName"> Name of your class sender </param>
+        </member>
+        <member name="M:InfoLog.Logger.#ctor">
+            <summary>
+            Crate empty Logger without senders. Add them separately or better use a LoggerFactory.
+            </summary>
+        </member>
+        <member name="M:InfoLog.Logger.#ctor(System.Collections.Generic.List{System.Collections.Generic.Dictionary{System.String,System.String}})">
+            <summary>
+            
+            </summary>
+            <param name="configuration">The configuration is set when the factory is created and cannot be changed</param>
+        </member>
+        <member name="M:InfoLog.Logger.#ctor(System.String)">
+            <summary>
+            Creates a logger based on a .xml config file.
+            </summary>
+            <param name="xmlPath">Absolute or relative path to .xml file</param>
+        </member>
+        <member name="M:InfoLog.Logger.#ctor(InfoLog.Config.Configuration)">
+            <summary>
+            Creates a logger based on a .xml config file.
+            </summary>
+            <param name="configuration">Get from Configuration constructor</param>
+        </member>
+        <member name="M:InfoLog.LoggerFactory`1.#ctor(System.String)">
+            <summary>
+            The constructor which sets the configuration (from xml).
+            The generic parameter is the type that implements the interface ILogger.
+            </summary>
+            <param name="xmlPath">Absolute or relative path to .xml file</param>
+        </member>
+        <member name="M:InfoLog.LoggerFactory`1.#ctor(InfoLog.Config.Configuration)">
+            <summary>
+            The constructor which sets the configuration (from xml).
+            The generic parameter is the type that implements the interface ILogger.
+            </summary>
+            <param name="configuration">The configuration is set when the factory is created and cannot be changed</param>
+        </member>
+        <member name="M:InfoLog.LoggerFactory`1.#ctor(System.Collections.Generic.List{System.Collections.Generic.Dictionary{System.String,System.String}})">
+            <summary>
+            The constructor which sets the configuration (from code).
+            The generic parameter is the type that implements the interface ILogger.
+            </summary>
+            <param name="configuration">The configuration is set when the factory is created and cannot be changed</param>
+        </member>
+        <member name="M:InfoLog.LoggerFactory`1.CreateLogger">
+            <summary>
+            Retrieves an ILogger object that is modified-restricted.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InfoLog.Senders.ISender.SendLog(System.String[],InfoLog.ILogger.LogLevel)">
+            <summary>
+            
+            </summary>
+            <param name="message">First member is the log message, other members are system info</param>
+            <param name="logLevel"></param>
+        </member>
+    </members>
+</doc>

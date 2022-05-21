@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         <Authors>KorablikDimak</Authors>
         <Description>A package for creating a log with the ability to supplement various logging options and use the built-in logging to the console, file, database.</Description>
         <Copyright>korablikdimak@gmail.com</Copyright>
@@ -13,10 +13,16 @@
         <PackageProjectUrl>https://github.com/KorablikDimak/InfoLog</PackageProjectUrl>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-        <Version>1.0.1</Version>
+        <Version>1.0.2</Version>
+        <LangVersion>10</LangVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+      <DocumentationFile>C:\Users\korab\RiderProjects\InfoLog\InfoLog\InfoLog.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Npgsql" Version="7.0.0-preview.4" />
       <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
     </ItemGroup>
 
@@ -25,6 +31,8 @@
       <Content Include="LogConfig.xml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+      <None Remove="InfoLog.xml" />
+      <Content Include="InfoLog.xml" />
     </ItemGroup>
 
 </Project>

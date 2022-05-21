@@ -10,14 +10,17 @@
         Custom senders can be added to construction <target 'attributes'/>. they are called in the same order as the file.
         For the base logger, only the attribute 'logsender' is required.
         -->
+        
         <!--
         DatabaseSender:
         '|' character is a separator into columns. The first column parameter in {} will be used for the name of the database column.
-        'layout' can't be changed after the table is created. Attempting to change may result in an exception.
+        'layout' can't be changed after the table is created. Attempting to change may result in an exception. 
+        The provider attribute is required. supported providers: 'MsSql', 'PostgreSql' (register does not matter).
         -->
-        <target logsender="Database" minlevel="Error" connectionstring="Data Source={server};Initial Catalog={database};Persist Security Info=True;User ID={username};Password={password}"
+        <target logsender="Database" provider="provider" minlevel="Error" connectionstring="your connection string"
                 layout="{shortdate}|{longtime}:{millisecond}|{level}|{class} {method}()|line: {line}|{message}"
                 tablename="logs"/>
+        
         <!--
         FileSender:
         Saves the string in its original form, replacing {param name} with param value.
@@ -25,7 +28,9 @@
         -->
         <target logsender="File" minlevel="Warning" filepath="{basedir}\logs\{shortdate}.log"
                 layout="{longtdate} | {shorttime}:{millisecond} | {level} | {method}() | line: {line} | {message}"/>
+        
         <!--
+        ConsoleSender:
         '|' character is a separator for console writer and is not used in the output.
         In separate sections you can specify the colors of the console:
         {foregroundcolor='color name'} or {backgroundcolor='color name'}.
