@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<logger>
+    <targets>
+        <target logsender="Database" provider="postgresql" minlevel="warning" connectionstring="Server=localhost;Username=***;Database=***;Port=5432;Password=***;"
+                layout="{shortdate}|{longtime}:{millisecond}|{level}|{class} {method}()|line: {line}|{message}"
+                tablename="InfoLog"/>
+    </targets>
+</logger>
