@@ -35,9 +35,5 @@
       <None Remove="InfoLog.xml" />
       <Content Include="InfoLog.xml" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Compile Include="obj\Release\net6.0\.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" />
-    </ItemGroup>
-
+    
 </Project>
