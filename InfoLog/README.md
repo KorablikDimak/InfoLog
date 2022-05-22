@@ -1,4 +1,6 @@
 [![](https://img.shields.io/badge/System.Data.SqlClient-4.8.3-informational)](https://www.nuget.org/packages/System.Data.SqlClient)
+[![](https://img.shields.io/badge/Npgsql-7.0.0-informational)](https://www.npgsql.org/)
+[![](https://img.shields.io/badge/xunit-2.4.2-black)](https://xunit.net/)
 # InfoLog
 ### Description
 A library for custom creation of logs that supports many built-in tools for obtaining detailed information in the log log and their subsequent output to the console/file/database. Supports creating your own logging methods by implementing interfaces `ILogger` and `ISender`.
@@ -30,5 +32,33 @@ public interface ISender
 ```
 `SendLog` the main method for sending messages supporting asynchrony. It is the implementation of this method that will allow you to create your own ways of logging logs.
 A more detailed description of the methods can be found in the **documentation**.
+
+### Database providers
+
+When logging to the database, you must specify in the config file which DBMS will be used.
+Currently supported:
+- MsSql
+- PostgreSql
+
+Support for these subds will be added soon:
+- MySql
+- SqLite
+- Oracle
+
+Using the interface:
+```C#
+public interface IDatabaseProvider
+{
+    public Task<bool> IsTableCreated();
+    public Task<bool> CreateTable();
+    public Task<bool> InsertIntoDatabase(string message);
+}
+``` 
+you can independently implement the method of connecting and sending messages to the database.
+
+### Unit tests
+
+All unit tests are in the directory [InfoLogTests](https://github.com/KorablikDimak/InfoLog/tree/master/InfoLogTests).
+Gradually, they will be supplemented until the library is fully covered with tests.
 
 ### `InfoLog` can be downloaded by [NuGet](https://www.nuget.org/packages/InfoLog).

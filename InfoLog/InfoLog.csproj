@@ -27,12 +27,31 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Content Include="obj\InfoLog.csproj.nuget.dgspec.json" />
+      <Content Include="obj\project.assets.json" />
+      <Content Include="obj\project.nuget.cache" />
+      <Content Include="obj\project.packagespec.json" />
+      <Content Include="obj\Release\InfoLog.1.0.0.nuspec" />
+      <Content Include="obj\Release\InfoLog.1.0.1.nuspec" />
+      <Content Include="obj\Release\InfoLog.1.0.2.nuspec" />
+      <Content Include="obj\Release\net6.0\InfoLog.AssemblyInfoInputs.cache" />
+      <Content Include="obj\Release\net6.0\InfoLog.assets.cache" />
+      <Content Include="obj\Release\net6.0\InfoLog.csproj.AssemblyReference.cache" />
+      <Content Include="obj\Release\net6.0\InfoLog.csproj.CoreCompileInputs.cache" />
+      <Content Include="obj\Release\net6.0\InfoLog.csproj.FileListAbsolute.txt" />
+      <Content Include="obj\Release\net6.0\InfoLog.dll" />
+      <Content Include="obj\Release\net6.0\InfoLog.pdb" />
+      <Content Include="obj\rider.project.restore.info" />
       <None Remove="LogConfig.xml" />
       <Content Include="LogConfig.xml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
       <None Remove="InfoLog.xml" />
       <Content Include="InfoLog.xml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Include="obj\Release\net6.0\.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" />
     </ItemGroup>
 
 </Project>
