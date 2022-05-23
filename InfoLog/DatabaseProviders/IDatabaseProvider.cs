@@ -2,6 +2,9 @@ using System.Threading.Tasks;
 
 namespace InfoLog.DatabaseProviders;
 
+/// <summary>
+/// 
+/// </summary>
 public interface IDatabaseProvider
 {
     /// <summary>

@@ -4,11 +4,26 @@
         <name>InfoLog</name>
     </assembly>
     <members>
+        <member name="T:InfoLog.Config.Configuration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InfoLog.Config.Configuration.Configs">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="M:InfoLog.Config.Configuration.#ctor(System.String)">
             <summary>
             Create dictionary {attribute:param} from xml file.
             </summary>
             <param name="xmlConfigPath">Absolute or relative path to .xml file</param>
+        </member>
+        <member name="T:InfoLog.DatabaseProviders.IDatabaseProvider">
+            <summary>
+            
+            </summary>
         </member>
         <member name="M:InfoLog.DatabaseProviders.IDatabaseProvider.IsTableCreated">
             <summary>
@@ -29,6 +44,125 @@
             <param name="message">row info to parse</param>
             <returns>true if row were added, false if not</returns>
         </member>
+        <member name="T:InfoLog.DatabaseProviders.MsSqlProvider">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InfoLog.DatabaseProviders.MsSqlProvider.#ctor(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="M:InfoLog.DatabaseProviders.MsSqlProvider.IsTableCreated">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:InfoLog.DatabaseProviders.MsSqlProvider.CreateTable">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:InfoLog.DatabaseProviders.MsSqlProvider.InsertIntoDatabase(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="T:InfoLog.DatabaseProviders.PostgreSqlProvider">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InfoLog.DatabaseProviders.PostgreSqlProvider.#ctor(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="M:InfoLog.DatabaseProviders.PostgreSqlProvider.IsTableCreated">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:InfoLog.DatabaseProviders.PostgreSqlProvider.CreateTable">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:InfoLog.DatabaseProviders.PostgreSqlProvider.InsertIntoDatabase(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="T:InfoLog.Extensions.FileSaver">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InfoLog.Extensions.FileSaver.SaveFileAsync(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="text"></param>
+            <param name="filepath"></param>
+        </member>
+        <member name="M:InfoLog.Extensions.FileSaver.SaveFile(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="text"></param>
+            <param name="filepath"></param>
+        </member>
+        <member name="M:InfoLog.Extensions.FileSaver.TrySaveFileAsync(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="text"></param>
+            <param name="filepath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InfoLog.Extensions.FileSaver.TrySaveFile(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="text"></param>
+            <param name="filepath"></param>
+            <returns></returns>
+        </member>
+        <member name="T:InfoLog.Extensions.LogLevelValidator">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InfoLog.Extensions.LogLevelValidator.ValidateLogLevel(InfoLog.Senders.ISender,InfoLog.ILogger.LogLevel)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="logLevel"></param>
+            <returns></returns>
+        </member>
+        <member name="T:InfoLog.Extensions.LogParser">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="M:InfoLog.Extensions.LogParser.CreateLogMessage(System.String[],System.String,InfoLog.ILogger.LogLevel)">
             <summary>
             Return formatted by layout string.
@@ -38,6 +172,46 @@
             <param name="layout"></param>
             <param name="logLevel"></param>
             <returns></returns>
+        </member>
+        <member name="T:InfoLog.ILogger">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InfoLog.ILogger.LogLevel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InfoLog.ILogger.LogLevel.TRACE">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InfoLog.ILogger.LogLevel.DEBUG">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InfoLog.ILogger.LogLevel.INFO">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InfoLog.ILogger.LogLevel.WARNING">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InfoLog.ILogger.LogLevel.ERROR">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InfoLog.ILogger.LogLevel.CRITICAL">
+            <summary>
+            
+            </summary>
         </member>
         <member name="M:InfoLog.ILogger.Trace(System.String,System.String,System.Int32)">
             <summary>
@@ -113,6 +287,11 @@
             </summary>
             <param name="senderName"> Name of your class sender </param>
         </member>
+        <member name="T:InfoLog.Logger">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="M:InfoLog.Logger.#ctor">
             <summary>
             Crate empty Logger without senders. Add them separately or better use a LoggerFactory.
@@ -135,6 +314,84 @@
             Creates a logger based on a .xml config file.
             </summary>
             <param name="configuration">Get from Configuration constructor</param>
+        </member>
+        <member name="M:InfoLog.Logger.Trace(System.String,System.String,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="memberName"></param>
+            <param name="sourceLineNumber"></param>
+        </member>
+        <member name="M:InfoLog.Logger.Debug(System.String,System.String,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="memberName"></param>
+            <param name="sourceLineNumber"></param>
+        </member>
+        <member name="M:InfoLog.Logger.Info(System.String,System.String,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="memberName"></param>
+            <param name="sourceLineNumber"></param>
+        </member>
+        <member name="M:InfoLog.Logger.Warning(System.String,System.String,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="memberName"></param>
+            <param name="sourceLineNumber"></param>
+        </member>
+        <member name="M:InfoLog.Logger.Error(System.String,System.String,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="memberName"></param>
+            <param name="sourceLineNumber"></param>
+        </member>
+        <member name="M:InfoLog.Logger.Critical(System.String,System.String,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="memberName"></param>
+            <param name="sourceLineNumber"></param>
+        </member>
+        <member name="M:InfoLog.Logger.AddSender(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="M:InfoLog.Logger.AddSender(InfoLog.Senders.ISender)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+        </member>
+        <member name="M:InfoLog.Logger.RemoveSender(InfoLog.Senders.ISender)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+        </member>
+        <member name="M:InfoLog.Logger.RemoveSender(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="senderName"></param>
+        </member>
+        <member name="T:InfoLog.LoggerFactory`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
         </member>
         <member name="M:InfoLog.LoggerFactory`1.#ctor(System.String)">
             <summary>
@@ -162,6 +419,69 @@
             Retrieves an ILogger object that is modified-restricted.
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:InfoLog.Senders.ConsoleSender">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InfoLog.Senders.ConsoleSender.Config">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InfoLog.Senders.ConsoleSender.SendLog(System.String[],InfoLog.ILogger.LogLevel)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="logLevel"></param>
+            <returns></returns>
+        </member>
+        <member name="T:InfoLog.Senders.DatabaseSender">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InfoLog.Senders.DatabaseSender.Config">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InfoLog.Senders.DatabaseSender.SendLog(System.String[],InfoLog.ILogger.LogLevel)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="logLevel"></param>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="T:InfoLog.Senders.FileSender">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InfoLog.Senders.FileSender.Config">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InfoLog.Senders.FileSender.SendLog(System.String[],InfoLog.ILogger.LogLevel)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="logLevel"></param>
+        </member>
+        <member name="T:InfoLog.Senders.ISender">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InfoLog.Senders.ISender.Config">
+            <summary>
+            
+            </summary>
         </member>
         <member name="M:InfoLog.Senders.ISender.SendLog(System.String[],InfoLog.ILogger.LogLevel)">
             <summary>

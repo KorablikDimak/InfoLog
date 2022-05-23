@@ -3,8 +3,14 @@ using System.Threading.Tasks;
 
 namespace InfoLog.Senders;
 
+/// <summary>
+/// 
+/// </summary>
 public interface ISender
 {
+    /// <summary>
+    /// 
+    /// </summary>
     Dictionary<string, string> Config { get; set; }
     /// <summary>
     /// 

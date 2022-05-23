@@ -6,15 +6,27 @@ using Npgsql;
 
 namespace InfoLog.DatabaseProviders;
 
+/// <summary>
+/// 
+/// </summary>
 public class PostgreSqlProvider : IDatabaseProvider
 {
     private Dictionary<string, string> Config { get; }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="config"></param>
     public PostgreSqlProvider(Dictionary<string, string> config)
     {
         Config = config;
     }
     
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public async Task<bool> IsTableCreated()
     {
         if (!Config.ContainsKey("tablename")) return false;
@@ -50,6 +62,11 @@ public class PostgreSqlProvider : IDatabaseProvider
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public async Task<bool> CreateTable()
     {
         await using var connection = new NpgsqlConnection(Config["connectionstring"]);
@@ -97,6 +114,12 @@ public class PostgreSqlProvider : IDatabaseProvider
         return sqlCommand;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="message"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public async Task<bool> InsertIntoDatabase(string message)
     {
         string commandText = $"INSERT INTO {Config["tablename"]} VALUES ( default,";

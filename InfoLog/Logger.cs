@@ -8,6 +8,9 @@ using InfoLog.Senders;
 
 namespace InfoLog;
 
+/// <summary>
+/// 
+/// </summary>
 public class Logger : ILogger
 {
     private List<ISender> Senders { get; }
@@ -59,6 +62,12 @@ public class Logger : ILogger
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="memberName"></param>
+    /// <param name="sourceLineNumber"></param>
     public async Task Trace(string message, 
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
         [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
@@ -71,6 +80,12 @@ public class Logger : ILogger
         }, ILogger.LogLevel.TRACE);
     }
         
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="memberName"></param>
+    /// <param name="sourceLineNumber"></param>
     public async Task Debug(string message,
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
         [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
@@ -83,6 +98,12 @@ public class Logger : ILogger
         }, ILogger.LogLevel.DEBUG);
     }
         
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="memberName"></param>
+    /// <param name="sourceLineNumber"></param>
     public async Task Info(string message,
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
         [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
@@ -95,6 +116,12 @@ public class Logger : ILogger
         }, ILogger.LogLevel.INFO);
     }
         
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="memberName"></param>
+    /// <param name="sourceLineNumber"></param>
     public async Task Warning(string message,
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
         [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
@@ -107,6 +134,12 @@ public class Logger : ILogger
         }, ILogger.LogLevel.WARNING);
     }
         
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="memberName"></param>
+    /// <param name="sourceLineNumber"></param>
     public async Task Error(string message, 
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
         [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
@@ -119,6 +152,12 @@ public class Logger : ILogger
         }, ILogger.LogLevel.ERROR);
     }
         
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="memberName"></param>
+    /// <param name="sourceLineNumber"></param>
     public async Task Critical(string message,
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
         [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0)
@@ -140,6 +179,10 @@ public class Logger : ILogger
         }
     }
         
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="config"></param>
     public void AddSender(Dictionary<string, string> config)
     {
         string senderName = config["logsender"];
@@ -173,16 +216,28 @@ public class Logger : ILogger
         Senders.Add(sender);
     }
         
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
     public void AddSender(ISender sender)
     {
         Senders.Add(sender);
     }
         
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
     public void RemoveSender(ISender sender)
     {
         Senders.Remove(sender);
     }
         
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="senderName"></param>
     public void RemoveSender(string senderName)
     {
         if (!senderName.Contains("Sender"))

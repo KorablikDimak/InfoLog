@@ -6,6 +6,9 @@ using System.Linq;
 
 namespace InfoLog.Extensions;
 
+/// <summary>
+/// 
+/// </summary>
 public static class LogParser
 {
     /// <summary>
@@ -34,7 +37,7 @@ public static class LogParser
                     ?.DeclaringType;
                 if (declaringType != null) targetClass = declaringType.FullName;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // ignored
             }

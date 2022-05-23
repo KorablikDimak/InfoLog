@@ -6,15 +6,27 @@ using System.Threading.Tasks;
 
 namespace InfoLog.DatabaseProviders;
 
+/// <summary>
+/// 
+/// </summary>
 public class MsSqlProvider : IDatabaseProvider
 {
     private Dictionary<string, string> Config { get; }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="config"></param>
     public MsSqlProvider(Dictionary<string, string> config)
     {
         Config = config;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public async Task<bool> IsTableCreated()
     {
         if (!Config.ContainsKey("tablename")) return false;
@@ -23,7 +35,7 @@ public class MsSqlProvider : IDatabaseProvider
         try
         {
             await connection.OpenAsync();
-            string commandText = "SELECT * FROM INFORMATION_SCHEMA.TABLES";
+            string commandText = $"select table_name from INFORMATION_SCHEMA.TABLES where table_name='{Config["tablename"]}'";
             var command = new SqlCommand(commandText, connection);
             var reader = await command.ExecuteReaderAsync();
 
@@ -33,11 +45,6 @@ public class MsSqlProvider : IDatabaseProvider
                 if (!reader.HasRows)
                 {
                     break;
-                }
-                if (reader.GetValue(i).ToString() != $"{Config["tablename"]}")
-                {
-                    i++;
-                    continue;
                 }
                 await reader.CloseAsync();
                 await connection.CloseAsync();
@@ -55,6 +62,11 @@ public class MsSqlProvider : IDatabaseProvider
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public async Task<bool> CreateTable()
     {
         await using var connection = new SqlConnection(Config["connectionstring"]);
@@ -102,6 +114,12 @@ public class MsSqlProvider : IDatabaseProvider
         return sqlCommand;
     }
     
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="message"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public async Task<bool> InsertIntoDatabase(string message)
     {
         string commandText = $"INSERT INTO {Config["tablename"]} VALUES (";

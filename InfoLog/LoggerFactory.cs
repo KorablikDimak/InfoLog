@@ -3,6 +3,10 @@ using InfoLog.Config;
 
 namespace InfoLog;
 
+/// <summary>
+/// 
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public class LoggerFactory<T> where T : ILogger, new()
 {
     private ILogger Logger { get; set; }

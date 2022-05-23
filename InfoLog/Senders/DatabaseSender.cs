@@ -6,10 +6,22 @@ using InfoLog.Extensions;
 
 namespace InfoLog.Senders;
 
+/// <summary>
+/// 
+/// </summary>
 public class DatabaseSender : ISender
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public Dictionary<string, string> Config { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="logLevel"></param>
+    /// <exception cref="Exception"></exception>
     public async Task SendLog(string[] message, ILogger.LogLevel logLevel)
     {
         if (!this.ValidateLogLevel(logLevel)) return;
