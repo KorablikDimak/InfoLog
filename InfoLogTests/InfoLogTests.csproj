@@ -10,7 +10,7 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
-        <PackageReference Include="Npgsql" Version="7.0.0-preview.4" />
+        <PackageReference Include="Npgsql" Version="6.0.4" />
         <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
         <PackageReference Include="xunit" Version="2.4.2-pre.12" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
@@ -28,10 +28,16 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="LogConfigNpgsql.xml">
+      <Content Include="XmlConfigs\IsTableCreatedMssql.xml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <Content Include="LogConfigMssql.xml">
+      <Content Include="XmlConfigs\IsTableCreatedNpgsql.xml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="XmlConfigs\LogConfigMssql.xml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="XmlConfigs\LogConfigNpgsql.xml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
     </ItemGroup>

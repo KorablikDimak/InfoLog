@@ -15,7 +15,7 @@ public class DatabaseSenderTests
         // Arrange
         ISender sender = new DatabaseSender();
         Configuration configuration =
-            new Configuration("C:\\Users\\korab\\RiderProjects\\InfoLog\\InfoLogTests\\LogConfigMssql.xml");
+            new Configuration("C:\\Users\\korab\\RiderProjects\\InfoLog\\InfoLogTests\\XmlConfigs\\LogConfigMssql.xml");
         sender.Config = configuration.Configs.First();
 
         string message = "SendLogMessageMssqlInserted Ok";
@@ -30,23 +30,23 @@ public class DatabaseSenderTests
         var command = new SqlCommand(commandTextSelect, connection);
         var reader = await command.ExecuteReaderAsync();
         await reader.ReadAsync();
+        bool result = reader.HasRows;
         
         // Assert
-        Assert.True(reader.HasRows);
-
         await reader.CloseAsync();
         command = new SqlCommand(commandTextDelete, connection);
         await command.ExecuteNonQueryAsync();
         await connection.CloseAsync();
+        Assert.True(result);
     }
 
     [Fact]
-    public async void SendLogMessageNpgsqlInserted()
+    public async void SendLogMessagePostgreSqlInserted()
     {
         // Arrange
         ISender sender = new DatabaseSender();
         Configuration configuration =
-            new Configuration("C:\\Users\\korab\\RiderProjects\\InfoLog\\InfoLogTests\\LogConfigNpgsql.xml");
+            new Configuration("C:\\Users\\korab\\RiderProjects\\InfoLog\\InfoLogTests\\XmlConfigs\\LogConfigNpgsql.xml");
         sender.Config = configuration.Configs.First();
         
         string message = "SendLogMessageNpgsqlInserted Ok";
@@ -61,13 +61,13 @@ public class DatabaseSenderTests
         var command = new NpgsqlCommand(commandTextSelect, connection);
         var reader = await command.ExecuteReaderAsync();
         await reader.ReadAsync();
+        bool result = reader.HasRows;
         
         // Assert
-        Assert.True(reader.HasRows);
-
         await reader.CloseAsync();
         command = new NpgsqlCommand(commandTextDelete, connection);
         await command.ExecuteNonQueryAsync();
         await connection.CloseAsync();
+        Assert.True(result);
     }
 }

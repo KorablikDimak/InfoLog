@@ -38,19 +38,14 @@ public class MsSqlProvider : IDatabaseProvider
             string commandText = $"select table_name from INFORMATION_SCHEMA.TABLES where table_name='{Config["tablename"]}'";
             var command = new SqlCommand(commandText, connection);
             var reader = await command.ExecuteReaderAsync();
-
-            int i = 0;
-            while (await reader.ReadAsync()) 
+            
+            if (reader.HasRows)
             {
-                if (!reader.HasRows)
-                {
-                    break;
-                }
                 await reader.CloseAsync();
                 await connection.CloseAsync();
                 return true;
             }
-        
+
             await reader.CloseAsync();
             await connection.CloseAsync();
             return false;

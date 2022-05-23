@@ -36,21 +36,19 @@ public class PostgreSqlProvider : IDatabaseProvider
         {
             await connection.OpenAsync();
             string commandText = 
-                $"SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema IN('public', '{Config["tablename"]}');";
+                "SELECT table_name FROM INFORMATION_SCHEMA.TABLES " +
+                $"WHERE table_schema = 'public' AND table_name = '{Config["tablename"].ToLower()}'";
             var command = new NpgsqlCommand(commandText, connection);
             var reader = await command.ExecuteReaderAsync();
-            
-            while (await reader.ReadAsync()) 
+            await reader.ReadAsync();
+
+            if (reader.HasRows)
             {
-                if (!reader.HasRows)
-                {
-                    break;
-                }
                 await reader.CloseAsync();
                 await connection.CloseAsync();
                 return true;
             }
-        
+
             await reader.CloseAsync();
             await connection.CloseAsync();
             return false;
