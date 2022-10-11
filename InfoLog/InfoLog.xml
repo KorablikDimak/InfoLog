@@ -150,7 +150,7 @@
             
             </summary>
         </member>
-        <member name="M:InfoLog.Extensions.LogLevelValidator.ValidateLogLevel(InfoLog.Senders.ISender,InfoLog.ILogger.LogLevel)">
+        <member name="M:InfoLog.Extensions.LogLevelValidator.ValidateLogLevel(InfoLog.Senders.ISender,InfoLog.LogLevel)">
             <summary>
             
             </summary>
@@ -158,12 +158,12 @@
             <param name="logLevel"></param>
             <returns></returns>
         </member>
-        <member name="T:InfoLog.Extensions.LogParser">
+        <member name="T:InfoLog.Extensions.Parser">
             <summary>
             
             </summary>
         </member>
-        <member name="M:InfoLog.Extensions.LogParser.CreateLogMessage(System.String[],System.String,InfoLog.ILogger.LogLevel)">
+        <member name="M:InfoLog.Extensions.Parser.ParseLayout(System.String[],System.String,InfoLog.LogLevel)">
             <summary>
             Return formatted by layout string.
             Target class can be found only if this method before await construction.
@@ -174,41 +174,6 @@
             <returns></returns>
         </member>
         <member name="T:InfoLog.ILogger">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:InfoLog.ILogger.LogLevel">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:InfoLog.ILogger.LogLevel.TRACE">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:InfoLog.ILogger.LogLevel.DEBUG">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:InfoLog.ILogger.LogLevel.INFO">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:InfoLog.ILogger.LogLevel.WARNING">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:InfoLog.ILogger.LogLevel.ERROR">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:InfoLog.ILogger.LogLevel.CRITICAL">
             <summary>
             
             </summary>
@@ -420,6 +385,59 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:InfoLog.LogLevel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InfoLog.LogLevel.TRACE">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InfoLog.LogLevel.DEBUG">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InfoLog.LogLevel.INFO">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InfoLog.LogLevel.WARNING">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InfoLog.LogLevel.ERROR">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InfoLog.LogLevel.CRITICAL">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InfoLog.Senders.ApiSender">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InfoLog.Senders.ApiSender.Config">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InfoLog.Senders.ApiSender.SendLog(System.String[],InfoLog.LogLevel)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="logLevel"></param>
+            <returns></returns>
+        </member>
         <member name="T:InfoLog.Senders.ConsoleSender">
             <summary>
             
@@ -430,7 +448,7 @@
             
             </summary>
         </member>
-        <member name="M:InfoLog.Senders.ConsoleSender.SendLog(System.String[],InfoLog.ILogger.LogLevel)">
+        <member name="M:InfoLog.Senders.ConsoleSender.SendLog(System.String[],InfoLog.LogLevel)">
             <summary>
             
             </summary>
@@ -448,7 +466,7 @@
             
             </summary>
         </member>
-        <member name="M:InfoLog.Senders.DatabaseSender.SendLog(System.String[],InfoLog.ILogger.LogLevel)">
+        <member name="M:InfoLog.Senders.DatabaseSender.SendLog(System.String[],InfoLog.LogLevel)">
             <summary>
             
             </summary>
@@ -466,7 +484,7 @@
             
             </summary>
         </member>
-        <member name="M:InfoLog.Senders.FileSender.SendLog(System.String[],InfoLog.ILogger.LogLevel)">
+        <member name="M:InfoLog.Senders.FileSender.SendLog(System.String[],InfoLog.LogLevel)">
             <summary>
             
             </summary>
@@ -483,7 +501,7 @@
             
             </summary>
         </member>
-        <member name="M:InfoLog.Senders.ISender.SendLog(System.String[],InfoLog.ILogger.LogLevel)">
+        <member name="M:InfoLog.Senders.ISender.SendLog(System.String[],InfoLog.LogLevel)">
             <summary>
             
             </summary>
