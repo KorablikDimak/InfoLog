@@ -19,15 +19,15 @@ public class FileSender : ISender
     /// </summary>
     /// <param name="message"></param>
     /// <param name="logLevel"></param>
-    public async Task SendLog(string[] message, ILogger.LogLevel logLevel)
+    public async Task SendLog(string[] message, LogLevel logLevel)
     {
         if (!this.ValidateLogLevel(logLevel)) return;
             
         if (!Config.ContainsKey("layout")) return;
-        string logMessage = LogParser.CreateLogMessage(message, Config["layout"], logLevel);
+        string logMessage = Parser.ParseLayout(message, Config["layout"], logLevel);
 
         if (!Config.ContainsKey("filepath")) return;
-        string filepath = LogParser.CreateLogMessage(message, Config["filepath"], logLevel);
+        string filepath = Parser.ParseLayout(message, Config["filepath"], logLevel);
 
         await FileSaver.SaveFileAsync(logMessage, filepath);
     }

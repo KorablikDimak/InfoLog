@@ -77,9 +77,7 @@ public static class FileSaver
     {
         int position = filepath.LastIndexOf("\\", StringComparison.Ordinal);
         string directoryPath = filepath[..position];
-        if (!Directory.Exists(directoryPath))
-        {
-            Directory.CreateDirectory(directoryPath);
-        }
+        if (Directory.Exists(directoryPath)) return;
+        if (directoryPath != null) Directory.CreateDirectory(directoryPath);
     }
 }

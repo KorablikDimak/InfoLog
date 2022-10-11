@@ -10,37 +10,6 @@ namespace InfoLog;
 public interface ILogger
 {
     /// <summary>
-    /// 
-    /// </summary>
-    public enum LogLevel
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        TRACE,
-        /// <summary>
-        /// 
-        /// </summary>
-        DEBUG,
-        /// <summary>
-        /// 
-        /// </summary>
-        INFO,
-        /// <summary>
-        /// 
-        /// </summary>
-        WARNING,
-        /// <summary>
-        /// 
-        /// </summary>
-        ERROR,
-        /// <summary>
-        /// 
-        /// </summary>
-        CRITICAL
-    }
-
-    /// <summary>
     /// First param is the log message, other params are system info and do not need to be filled.
     /// </summary>
     /// <param name="message">log message</param>

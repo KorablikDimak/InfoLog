@@ -9,7 +9,7 @@ namespace InfoLog.Extensions;
 /// <summary>
 /// 
 /// </summary>
-public static class LogParser
+public static class Parser
 {
     /// <summary>
     /// Return formatted by layout string.
@@ -19,14 +19,14 @@ public static class LogParser
     /// <param name="layout"></param>
     /// <param name="logLevel"></param>
     /// <returns></returns>
-    public static string CreateLogMessage(string[] message = null, string layout = "", ILogger.LogLevel logLevel = ILogger.LogLevel.TRACE)
+    public static string ParseLayout(string[] message = null, string layout = "", LogLevel logLevel = LogLevel.TRACE)
     {
         if (message is not { Length: 3 })
         {
             return "";
         }
             
-        string targetClass = "";
+        var targetClass = "";
         if (layout.Contains("{class}"))
         {
             try

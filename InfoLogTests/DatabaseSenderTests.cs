@@ -14,17 +14,17 @@ public class DatabaseSenderTests
     {
         // Arrange
         ISender sender = new DatabaseSender();
-        Configuration configuration =
+        var configuration =
             new Configuration("C:\\Users\\korab\\RiderProjects\\InfoLog\\InfoLogTests\\XmlConfigs\\LogConfigMssql.xml");
         sender.Config = configuration.Configs.First();
 
-        string message = "SendLogMessageMssqlInserted Ok";
+        const string message = "SendLogMessageMssqlInserted Ok";
         string commandTextSelect =
             $"SELECT TOP (1) message FROM {sender.Config["tablename"]} WHERE message = '{message}'";
         string commandTextDelete = $"DELETE FROM {sender.Config["tablename"]} WHERE message = '{message}'";
 
         // Act
-        await sender.SendLog(new[] { $"{message}", "", "" }, ILogger.LogLevel.CRITICAL);
+        await sender.SendLog(new[] { $"{message}", "", "" }, LogLevel.CRITICAL);
         await using var connection = new SqlConnection(sender.Config["connectionstring"]);
         await connection.OpenAsync();
         var command = new SqlCommand(commandTextSelect, connection);
@@ -45,17 +45,17 @@ public class DatabaseSenderTests
     {
         // Arrange
         ISender sender = new DatabaseSender();
-        Configuration configuration =
+        var configuration =
             new Configuration("C:\\Users\\korab\\RiderProjects\\InfoLog\\InfoLogTests\\XmlConfigs\\LogConfigNpgsql.xml");
         sender.Config = configuration.Configs.First();
         
-        string message = "SendLogMessageNpgsqlInserted Ok";
+        const string message = "SendLogMessageNpgsqlInserted Ok";
         string commandTextSelect =
             $"SELECT message FROM {sender.Config["tablename"]} WHERE message = '{message}' limit 1";
         string commandTextDelete = $"DELETE FROM {sender.Config["tablename"]} WHERE message = '{message}'";
 
         // Act
-        await sender.SendLog(new[] { $"{message}", "", "" }, ILogger.LogLevel.CRITICAL);
+        await sender.SendLog(new[] { $"{message}", "", "" }, LogLevel.CRITICAL);
         await using var connection = new NpgsqlConnection(sender.Config["connectionstring"]);
         await connection.OpenAsync();
         var command = new NpgsqlCommand(commandTextSelect, connection);

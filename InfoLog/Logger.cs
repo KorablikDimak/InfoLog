@@ -77,7 +77,7 @@ public class Logger : ILogger
             message,
             memberName,
             sourceLineNumber.ToString()
-        }, ILogger.LogLevel.TRACE);
+        }, LogLevel.TRACE);
     }
         
     /// <summary>
@@ -95,7 +95,7 @@ public class Logger : ILogger
             message,
             memberName,
             sourceLineNumber.ToString()
-        }, ILogger.LogLevel.DEBUG);
+        }, LogLevel.DEBUG);
     }
         
     /// <summary>
@@ -113,7 +113,7 @@ public class Logger : ILogger
             message,
             memberName,
             sourceLineNumber.ToString()
-        }, ILogger.LogLevel.INFO);
+        }, LogLevel.INFO);
     }
         
     /// <summary>
@@ -131,7 +131,7 @@ public class Logger : ILogger
             message,
             memberName,
             sourceLineNumber.ToString()
-        }, ILogger.LogLevel.WARNING);
+        }, LogLevel.WARNING);
     }
         
     /// <summary>
@@ -149,7 +149,7 @@ public class Logger : ILogger
             message,
             memberName,
             sourceLineNumber.ToString()
-        }, ILogger.LogLevel.ERROR);
+        }, LogLevel.ERROR);
     }
         
     /// <summary>
@@ -167,13 +167,13 @@ public class Logger : ILogger
             message,
             memberName,
             sourceLineNumber.ToString()
-        }, ILogger.LogLevel.CRITICAL);
+        }, LogLevel.CRITICAL);
     }
 
-    private async Task Log(string[] message, ILogger.LogLevel logLevel)
+    private async Task Log(string[] message, LogLevel logLevel)
     {
         if (Senders == null) return;
-        foreach (ISender sender in Senders)
+        foreach (var sender in Senders)
         {
             await sender.SendLog(message, logLevel);
         }
@@ -192,7 +192,7 @@ public class Logger : ILogger
         }
 
         ISender sender = null;
-        Type senderType = Type.GetType("InfoLog.Senders." + senderName, false, false);
+        var senderType = Type.GetType("InfoLog.Senders." + senderName, false, false);
         if (senderType != null)
         {
             sender = senderType.GetConstructor(Array.Empty<Type>())?
@@ -202,13 +202,14 @@ public class Logger : ILogger
         if (sender == null)
         {
             var types = Assembly.GetEntryAssembly()?.GetTypes();
-            foreach (var type in types)
-            {
-                if (!type.FullName.Contains(senderName)) continue;
-                sender = type.GetConstructor(Array.Empty<Type>())?
-                    .Invoke(Array.Empty<object>()) as ISender;
-                break;
-            }
+            if (types != null)
+                foreach (var type in types)
+                {
+                    if (type.FullName != null && !type.FullName.Contains(senderName)) continue;
+                    sender = type.GetConstructor(Array.Empty<Type>())?
+                        .Invoke(Array.Empty<object>()) as ISender;
+                    break;
+                }
         }
 
         if (sender == null) return;

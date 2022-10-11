@@ -17,5 +17,5 @@ public interface ISender
     /// </summary>
     /// <param name="message">First member is the log message, other members are system info</param>
     /// <param name="logLevel"></param>
-    Task SendLog(string[] message, ILogger.LogLevel logLevel);
+    Task SendLog(string[] message, LogLevel logLevel);
 }

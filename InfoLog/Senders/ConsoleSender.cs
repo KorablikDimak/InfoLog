@@ -21,12 +21,12 @@ public class ConsoleSender : ISender
     /// <param name="message"></param>
     /// <param name="logLevel"></param>
     /// <returns></returns>
-    public Task SendLog(string[] message, ILogger.LogLevel logLevel)
+    public Task SendLog(string[] message, LogLevel logLevel)
     {
         if (!this.ValidateLogLevel(logLevel)) return Task.CompletedTask;
             
         if (!Config.ContainsKey("layout")) return Task.CompletedTask;
-        string logMessage = LogParser.CreateLogMessage(message, Config["layout"], logLevel);
+        string logMessage = Parser.ParseLayout(message, Config["layout"], logLevel);
             
         ConsoleColorWrite(logMessage);
         return Task.CompletedTask;
@@ -49,16 +49,17 @@ public class ConsoleSender : ISender
                 }
                     
                 string pair = sourceString.Substring(
-                    sourceString.IndexOf("{"), 
-                    sourceString.IndexOf("}") - sourceString.IndexOf("{") + 1);
+                    sourceString.IndexOf("{", StringComparison.Ordinal), 
+                    sourceString.IndexOf("}", StringComparison.Ordinal) - 
+                    sourceString.IndexOf("{", StringComparison.Ordinal) + 1);
                 
-                int position = pair.IndexOf("=");
+                int position = pair.IndexOf("=", StringComparison.Ordinal);
                 if (position < 0)
                     break;
 
                 if (pair.Substring(1, position - 1).ToLower().Contains("foregroundcolor"))
                 {
-                    ConsoleColor.TryParse(pair
+                    Enum.TryParse(pair
                         .Substring(position + 1, pair.Length - position - 2)
                         .Replace(" ", ""), true, out ConsoleColor color);
                     Console.ForegroundColor = color;
@@ -66,14 +67,15 @@ public class ConsoleSender : ISender
                 
                 if (pair.Substring(1, position - 1).ToLower().Contains("backgroundcolor"))
                 {
-                    ConsoleColor.TryParse(pair
+                    Enum.TryParse(pair
                         .Substring(position + 1, pair.Length - position - 2)
                         .Replace(" ", ""), true, out ConsoleColor color);
                     Console.BackgroundColor = color;
                 }
                     
-                sourceString = sourceString.Remove(sourceString.IndexOf("{"),
-                    sourceString.IndexOf("}") - sourceString.IndexOf("{") + 1);
+                sourceString = sourceString.Remove(sourceString.IndexOf("{", StringComparison.Ordinal),
+                    sourceString.IndexOf("}", StringComparison.Ordinal) - 
+                    sourceString.IndexOf("{", StringComparison.Ordinal) + 1);
             }
         }
             

@@ -22,14 +22,14 @@ public class DatabaseSender : ISender
     /// <param name="message"></param>
     /// <param name="logLevel"></param>
     /// <exception cref="Exception"></exception>
-    public async Task SendLog(string[] message, ILogger.LogLevel logLevel)
+    public async Task SendLog(string[] message, LogLevel logLevel)
     {
         if (!this.ValidateLogLevel(logLevel)) return;
         if (!Config.ContainsKey("connectionstring")) 
             throw new Exception("Config file does not have attribute 'connectionstring'");
-        string logMessage = LogParser.CreateLogMessage(message, Config["layout"], logLevel);
+        string logMessage = Parser.ParseLayout(message, Config["layout"], logLevel);
 
-        IDatabaseProvider databaseProvider = GetDatabaseProvider();
+        var databaseProvider = GetDatabaseProvider();
         if (!await databaseProvider.IsTableCreated()) await databaseProvider.CreateTable();
         await databaseProvider.InsertIntoDatabase(logMessage);
     }

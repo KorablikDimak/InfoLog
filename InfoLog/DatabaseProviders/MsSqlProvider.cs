@@ -35,7 +35,7 @@ public class MsSqlProvider : IDatabaseProvider
         try
         {
             await connection.OpenAsync();
-            string commandText = $"select table_name from INFORMATION_SCHEMA.TABLES where table_name='{Config["tablename"]}'";
+            var commandText = $"select table_name from INFORMATION_SCHEMA.TABLES where table_name='{Config["tablename"]}'";
             var command = new SqlCommand(commandText, connection);
             var reader = await command.ExecuteReaderAsync();
             
@@ -84,24 +84,26 @@ public class MsSqlProvider : IDatabaseProvider
 
     private string TableStructParse()
     {
-        string sqlCommand = $"CREATE TABLE {Config["tablename"]} ( Id int IDENTITY PRIMARY KEY,\n";
+        var sqlCommand = $"CREATE TABLE {Config["tablename"]} ( Id int IDENTITY PRIMARY KEY,\n";
                 
-        var layoutParts = Config["layout"].Split("|", StringSplitOptions.RemoveEmptyEntries); 
-        foreach (var layoutPart in layoutParts)
+        string[] layoutParts = Config["layout"].Split("|", StringSplitOptions.RemoveEmptyEntries); 
+        foreach (string layoutPart in layoutParts)
         {
-            string sourceString = layoutPart.Substring(
-                layoutPart.IndexOf("{") + 1, 
-                layoutPart.IndexOf("}") - layoutPart.IndexOf("{") - 1);
-            if (sourceString == "")
+            string source = layoutPart.Substring(
+                layoutPart.IndexOf("{", StringComparison.Ordinal) + 1, 
+                layoutPart.IndexOf("}", StringComparison.Ordinal) - 
+                layoutPart.IndexOf("{", StringComparison.Ordinal) - 1);
+            
+            if (source == "")
             {
-                sourceString = layoutPart;
+                source = layoutPart;
             }
 
-            sqlCommand = sourceString switch
+            sqlCommand = source switch
             {
-                "message" => sqlCommand + " " + sourceString + " " + "NVARCHAR(1000) NOT NULL" + ",\n",
-                "class" => sqlCommand + " " + sourceString + " " + "NVARCHAR(100) NOT NULL" + ",\n",
-                _ => sqlCommand + " " + sourceString + " " + "NVARCHAR(50) NOT NULL" + ",\n"
+                "message" => sqlCommand + " " + source + " " + "NVARCHAR(1000) NOT NULL" + ",\n",
+                "class" => sqlCommand + " " + source + " " + "NVARCHAR(100) NOT NULL" + ",\n",
+                _ => sqlCommand + " " + source + " " + "NVARCHAR(50) NOT NULL" + ",\n"
             };
         }
 
@@ -117,7 +119,7 @@ public class MsSqlProvider : IDatabaseProvider
     /// <exception cref="Exception"></exception>
     public async Task<bool> InsertIntoDatabase(string message)
     {
-        string commandText = $"INSERT INTO {Config["tablename"]} VALUES (";
+        var commandText = $"INSERT INTO {Config["tablename"]} VALUES (";
 
         commandText = message
             .Split("|")
