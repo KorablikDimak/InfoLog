@@ -1,5 +1,5 @@
 [![](https://img.shields.io/badge/System.Data.SqlClient-4.8.3-informational)](https://www.nuget.org/packages/System.Data.SqlClient)
-[![](https://img.shields.io/badge/Npgsql-7.0.0-informational)](https://www.npgsql.org/)
+[![](https://img.shields.io/badge/Npgsql-6.0.4-informational)](https://www.npgsql.org/)
 [![](https://img.shields.io/badge/xunit-2.4.2-black)](https://xunit.net/)
 # InfoLog
 ### Description
