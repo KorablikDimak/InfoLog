@@ -12,7 +12,7 @@ Logger supports asynchrony. all methods of sending messages are asynchronous. As
 ### Creating a logger
 Basic way to get logger with [example xml](https://github.com/KorablikDimak/InfoLog/blob/master/LogConfig.xml):
 ```C#
-Configuration configuration = new  Configuration("LogConfig.xml");
+Configuration configuration = new Configuration("LogConfig.xml");
 LoggerFactory<Logger> loggerFactory = new LoggerFactory<Logger>(configuration);
 ILogger logger = loggerFactory.CreateLogger();
 
