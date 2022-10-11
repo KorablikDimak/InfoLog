@@ -27,7 +27,7 @@ ISender is the main interface for message processing:
 public interface ISender
     {
         Dictionary<string, string> Config { get; set; }
-        Task SendLog(string[] message, ILogger.LogLevel logLevel);
+        Task SendLog(string[] message, LogLevel logLevel);
     }
 ```
 `SendLog` the main method for sending messages supporting asynchrony. It is the implementation of this method that will allow you to create your own ways of logging logs.
