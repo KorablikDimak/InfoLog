@@ -5,7 +5,7 @@
 ### Description
 A library for custom creation of logs that supports many built-in tools for obtaining detailed information in the log log and their subsequent output to the console/file/database. Supports creating your own logging methods by implementing interfaces `ILogger` and `ISender`.
 ### Logger configuration
-[Example and xml documentation](https://github.com/KorablikDimak/InfoLog/blob/master/InfoLog/LogConfig.xml) 
+[Example and xml documentation](https://github.com/KorablikDimak/InfoLog/blob/master/InfoLog/LogConfig.xml).
 The **.xml** file is a convenient way to set the type of output message and its parameters. Builtins can output the method that raised the message, the class of that method, line numbers, exact timestamps, and logging levels. You can set an unlimited number of ways to write log messages in addition to the three built-in initially.
 ### Async
 Logger supports asynchrony. all methods of sending messages are asynchronous. Asynchrony can be used as you wish, or you can leave the synchronous call to the logger.
